@@ -4,8 +4,10 @@ import { Alert, FlatList, Modal, ScrollView, StyleSheet, Text, TouchableOpacity,
 import Header from './components/Header';
 import Tasksitems from './components/Tasksitems';
 import { AntDesign } from '@expo/vector-icons';
+import ReminderForm from './components/ReminderForm';
 
 export default function App() {
+  var [isHome,setHome]=useState(true);
   var [todos,seTodos]=useState(
     [
       {name:"Samuel",dob:'15 Jun 2024', msg: `that can be used as a pre-built solution! layground to view and fork react-native-shared-preferences`,id:'1'},
@@ -21,14 +23,16 @@ export default function App() {
   return (
     <View style={styles.container}>
       {/*header*/}
-      <Header/>
+      <Header setHome={setHome}/>
       <View style={styles.content}>
         {/*to form*/}
         <View style={styles.list}>
         
-          {todos ? <Tasksitems todos={todos} seTodos={seTodos}/> :
+          {isHome && todos ? <Tasksitems todos={todos} seTodos={seTodos}/> :
+          isHome && todos.length===0 ?
            <Text style={{backgroundColor:'black',color:'white',padding:5,borderRadius:5,
-           margin:5}}>No birthdays added yet</Text>}
+           margin:5}}>No birthdays added yet</Text> : !isHome && <ReminderForm setHome={setHome}/>
+          }
         </View>
       </View>
     
@@ -42,7 +46,7 @@ export default function App() {
         <TouchableOpacity style={styles.update}>
         <Text style={{fontSize:16,color:'#dd1c4b',fontWeight:'bold'}}>calender</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{display:'flex',flexWrap:"wrap"}}><Text style={styles.addbtn}><AntDesign name="plussquareo" size={24} color="white" /></Text></TouchableOpacity>
+        <TouchableOpacity onPress={()=>setHome(false)} style={{display:'flex',flexWrap:"wrap"}}><Text style={styles.addbtn}><AntDesign name="plussquareo" size={24} color="white" /></Text></TouchableOpacity>
       </View>
       
     </View>
