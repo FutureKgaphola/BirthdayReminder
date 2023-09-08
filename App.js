@@ -1,10 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Alert, FlatList, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Header from './components/Header';
 import Tasksitems from './components/Tasksitems';
 import { AntDesign } from '@expo/vector-icons';
 import ReminderForm from './components/ReminderForm';
+import { Snackbar } from 'react-native-paper';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App() {
   var [isHome,setHome]=useState(true);
@@ -20,8 +21,11 @@ export default function App() {
       {name:"Roony Simons",dob:'13 Sept 2023', msg: `und to s example apps and templates on CodeSandbox. Click any example below to run it instantly or find templates that can be used as a pre-built solution!`,id:'8'}
     ]
   );
+  var [isvisible,showSnack]=useState(false);
+  
   return (
-    <View style={styles.container}>
+    <SafeAreaProvider style={styles.container}>
+<View style={styles.container}>
       {/*header*/}
       <Header setHome={setHome}/>
       <View style={styles.content}>
@@ -38,18 +42,26 @@ export default function App() {
     
       <View style={styles.bottomView}>
         <TouchableOpacity style={styles.update}>
-        <Text style={{display:'flex',fontSize:16,color:'#dd1c4b',fontWeight:'bold'}}>settings</Text>
+        <Text style={{display:'flex',fontSize:16,color:'#dd1c4b',fontWeight:'bold'}}><AntDesign name="setting" size={26} color="red" /></Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.update}>
-        <Text style={{display:'flex',fontSize:16,color:'#dd1c4b',fontWeight:'bold'}}>ideas</Text>
+        
+        <TouchableOpacity style={styles.update}
+        onPress={()=>showSnack(true)}>
+        <Text style={{fontSize:16,color:'#dd1c4b',fontWeight:'bold'}}><AntDesign name="hearto" size={26} color="red" /></Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.update}>
-        <Text style={{fontSize:16,color:'#dd1c4b',fontWeight:'bold'}}>calender</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={()=>setHome(false)} style={{display:'flex',flexWrap:"wrap"}}><Text style={styles.addbtn}><AntDesign name="plussquareo" size={24} color="white" /></Text></TouchableOpacity>
+        <TouchableOpacity onPress={()=>setHome(false)} style={{display:'flex',flexWrap:"wrap"}}><Text style={styles.addbtn}><AntDesign name="plussquareo" size={26} color="white" /></Text></TouchableOpacity>
       </View>
+      {isvisible && <Snackbar
+          visible={isvisible}
+          onDismiss={() => showSnack(false)}
+          duration={2000}
+        >
+          Hey there! Thanks for the ❤️reaction.
+        </Snackbar>}
       
     </View>
+    </SafeAreaProvider>
+    
   );
 }
 
@@ -67,7 +79,7 @@ const styles = StyleSheet.create({
   },
   update:{
     backgroundColor:'white',
-    padding:4,
+    padding:5,
     display:'flex',
     borderRadius:5,
     fontWeight:'bold',
@@ -86,8 +98,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     gap:4,
     backgroundColor: 'black',
-    margin:5,
-    bottom:0,
+    margin:2,
     borderRadius:5,
     padding:5
   },

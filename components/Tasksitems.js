@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, FlatList, Image, StyleSheet, Text, TouchableOpacity, View, Pressable, Linking } from 'react-native';
+import { Modal, FlatList, Image, StyleSheet, Text, TouchableOpacity, View, Linking } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Tasksitems = (props) => {
@@ -133,9 +133,7 @@ const styles= StyleSheet.create({
         
       },
       tochview:{
-        marginBottom:15,
-        shadowRadius:5,
-        
+        marginBottom:10,
       },
       update:{
         backgroundColor:'white',

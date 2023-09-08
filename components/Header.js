@@ -15,7 +15,7 @@ const Header = ({setHome}) => {
             
                 <Text style={styles.title}>Birthday Reminder</Text>
                 <Text style={styles.caption}>May <Text style={{color:'#ffbf41',fontWeight:'bold'}}>God</Text> give you <Text style={{color:'#ffbf41',fontWeight:'bold'}}>peace</Text> on your special day</Text>
-                <TouchableOpacity onPress={()=>setHome(true)} style={{display:'flex',flexWrap:"wrap"}}><Text style={styles.addbtn}><AntDesign name="plussquareo" size={24} color="white" /></Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=>setHome(true)} style={{display:'flex',flexWrap:"wrap"}}><Text style={styles.addbtn}><AntDesign name="home" size={24} color="white" /></Text></TouchableOpacity>
             </View>
  
         </View>
