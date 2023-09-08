@@ -19,7 +19,7 @@ const ReminderForm = ({ setHome }) => {
   
       console.log(result);
   
-      if (result) {
+      if (result.canceled==false) {
         setImage(result.assets[0].uri);
       }
     };
