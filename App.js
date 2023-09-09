@@ -57,7 +57,9 @@ return (
       <TouchableOpacity onPress={()=>setHome(false)} style={{display:'flex',flexWrap:"wrap"}}><Text style={styles.addbtn}>
           <AntDesign name="plussquareo" size={26} color="white" />
         </Text></TouchableOpacity>
+        <TouchableOpacity onPress={()=>setHome(true)} style={{display:'flex',flexWrap:"wrap"}}><Text style={styles.addbtn}><AntDesign name="home" size={26} color="white" /></Text></TouchableOpacity>
     </View>
+
     {isvisible && <Snackbar visible={isvisible} onDismiss={()=> showSnack(false)}
       duration={2000}
       >
