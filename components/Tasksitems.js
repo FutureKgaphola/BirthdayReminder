@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Modal, FlatList, Image, StyleSheet, Text, TouchableOpacity, View, Linking } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import {useRef} from 'react';
 
 const Tasksitems = (props) => {
+  const yourRef = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
     var phoneNumber='+27781517686';
     var whatsappMsg=`Hi friend.🌏🍰\n\nA wish for you on your birthday, whatever
@@ -51,6 +53,9 @@ const Tasksitems = (props) => {
         </Modal>
                   
             <FlatList
+            ref={yourRef}
+            onContentSizeChange={() => yourRef.current.scrollToEnd() }
+            onLayout={() => yourRef.current.scrollToEnd() }
             data={todos}
             keyExtractor={item => item.id}
             renderItem={({item}) => (

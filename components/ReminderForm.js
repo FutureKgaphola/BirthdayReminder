@@ -6,25 +6,46 @@ import * as ImagePicker from 'expo-image-picker';
 import Activityprogress from "./Activityprogress";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Platform } from "react-native";
+import uuid from 'react-native-uuid';
+import { Snackbar } from 'react-native-paper';
 
-const ReminderForm = ({ setHome }) => {
+const ReminderForm = (props) => {
+  const {setHome,seTodos,todos}=props;
+  const [isvisible,showSnack]=useState(false);
   const[date,setDate]=useState(new Date());
   const[showPicker,setShowPicker]=useState(false);
   const [image, setImage] = useState(null);
   const[isSaving,setSave]=useState('save');
   const[isDisabled,setDisable]=useState(false);
-  const[dob,setdob]=useState('Day Mon DD YYYY');
+  const[dob,setdob]=useState('*Day Mon DD YYYY');
+  const [extra,setExtra]=useState('');
+  const [name,setName]=useState('');
+  const [iserr,setError]=useState('');
   var uploading=()=>{
     
     try{
-      setSave('adding remider...');
-      setDisable(true);
+      if(name!=='' && dob!=='' && dob!=='*Day Mon DD YYYY' && extra!=='')
+      {
+        setSave('adding remider...');
+        setDisable(true);
+        seTodos([...todos,{name:name,dob:dob,msg:extra,id:uuid.v4()}]);
+        setTimeout(() => {
+          setError('');
+          setName('');
+          setExtra('');
+          setdob('*Day Mon DD YYYY');
+          setHome(true);
+        }, 2000);
+        setError('');
+      }else{
+        setError('');
+        showSnack(true);
+      }
     }catch(err){
+      setError(String(err));
       setSave('save');
       setDisable(false);
-    }finally{
-      setSave('save');
-      setDisable(false);
+      showSnack(true);
     }
   };
   const toggleDatepicker=()=>{
@@ -65,8 +86,10 @@ const ReminderForm = ({ setHome }) => {
       <View style={styles.containerinput}>
         <Iconicon name="person-circle-outline" size={24} color={"black"} />
         <TextInput
+          onChangeText={(e)=>setName(e)}
+          value={name}
           style={{ marginLeft: 2 }}
-          placeholder="friend's name"
+          placeholder="*friend's name"
           keyboardType="default"
           cursorColor={"black"}
         />
@@ -78,7 +101,7 @@ const ReminderForm = ({ setHome }) => {
           onPress={toggleDatepicker}>
             <TextInput
               style={{ marginLeft: 2 }}
-              placeholder="birth date"
+              placeholder="*birth date"
               keyboardType="default"
               cursorColor={"black"}
               editable={false}
@@ -92,10 +115,12 @@ const ReminderForm = ({ setHome }) => {
       <View style={styles.containerinput}>
         <Iconicon name="bookmarks" size={24} color={"black"} style={{ alignSelf: "center" }} />
         <TextInput
+          onChangeText={(e)=>setExtra(e)}
           style={{ marginLeft: 2, marginRight: 2 }}
           multiline
+          value={extra}
           numberOfLines={4}
-          placeholder="extra notes"
+          placeholder="*extra notes"
           keyboardType="default"
           cursorColor={"black"}
         />
@@ -123,6 +148,13 @@ const ReminderForm = ({ setHome }) => {
           timeZoneName={'Africa/Johannesburg'}
           />
       )}
+
+{isvisible && <Snackbar visible={isvisible} onDismiss={()=> showSnack(false)}
+      duration={2000}
+      >
+        {iserr!=='' ? iserr : "Please fill the form first."}
+      
+    </Snackbar>}
       
     </View>
   );

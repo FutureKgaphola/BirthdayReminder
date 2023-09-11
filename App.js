@@ -37,7 +37,7 @@ return (
         isHome && todos.length===0 ?
         <Text style={{backgroundColor:'black',color:'white',padding:5,borderRadius:5,
            margin:5}}>No birthdays added yet</Text> : !isHome &&
-        <ReminderForm setHome={setHome} />
+        <ReminderForm setHome={setHome} seTodos={seTodos} todos={todos}/>
         }
       </View>
     </View>
