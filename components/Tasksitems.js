@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   View,
   Linking,
-  RefreshControl
+  RefreshControl,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRef } from "react";
 
 const Tasksitems = (props) => {
-  const [refreshing, setRefreshing] =useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -113,9 +113,11 @@ const Tasksitems = (props) => {
       </Modal>
 
       <FlatList
-      refreshing={refreshing}
-      onRefresh={()=>{onRefresh}}
-      onen
+        refreshing={refreshing}
+        onRefresh={() => {
+          onRefresh;
+        }}
+        onen
         ref={yourRef}
         onContentSizeChange={() => yourRef.current.scrollToEnd()}
         onLayout={() => yourRef.current.scrollToEnd()}
